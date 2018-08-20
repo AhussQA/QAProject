@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,6 +21,7 @@ import com.mysql.cj.xdevapi.JsonString;
 
 import Database.Connection;
 import Database.DatabaseFunctions;
+import Model.Person;
 
 @Path("/rest")
 public class RestFunctions {
@@ -73,4 +75,11 @@ public class RestFunctions {
 //	public String  search() {
 //			
 //	}
+	
+	
+	@POST
+	@Path("/createUser")
+	public void createUser(Person p) {
+		System.out.println(p.getFirstName());
+	}
 }
