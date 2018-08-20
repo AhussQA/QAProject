@@ -1,0 +1,26 @@
+
+
+.nav {
+    background-color:lightgrey;
+    
+}
+
+
+#search_bar{
+    float:right;
+    position: relative;
+    left:-25%;
+    width: 50%;
+    
+}
+
+#submit_button{
+    float:right;
+    position: relative;
+    right:-28.5%;
+        
+}
+
+#loginFields{
+    
+}

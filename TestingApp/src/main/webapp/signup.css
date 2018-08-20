@@ -1,0 +1,17 @@
+.input-group > div:nth-child(9){
+	padding-top:50px;
+}
+
+.input-group{
+	padding-left:50px;
+}
+input.form-control{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+
+div{
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
