@@ -10,14 +10,20 @@ public class DatabaseFunctions {
         return "'"+s+"'";
     }
 
-  public static String createUserAccount(int id, String userName,String password,String firstName,String lastName){
+  public static String createUserAccount(int id, String userName,String password,String firstName,String lastName,int doornumber,String postcode){
 
-        return "INSERT INTO person (PersonID,Name) VALUES ("+id+","+enquote(userName)+")";
+        return "INSERT INTO person VALUES ("+id+","+enquote(userName)+","+enquote(password)+","
+        +enquote(firstName)+","+enquote(lastName)+","+doornumber+","+enquote(postcode)+")";
     }
-  public static String createPostCode(String postcode,String county, String country){
+  public static String createPostCode(String postcode,String city,String county, String country){
 
-      return "INSERT INTO postcode VALUES ("+enquote(postcode)+","+enquote(county)+","+enquote(country)+")";
+      return "INSERT INTO postcode VALUES ("+enquote(postcode)+","+enquote(city)+","+enquote(county)+","+enquote(country)+")";
   }
+  
+  public static String listPostcode(String postcode){
+      return "SELECT * FROM postcode WHERE postcode ='"+postcode+"'";
+  }
+  
   public static String createBasket(int id,String itemName){
 
       

@@ -6,22 +6,19 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
-import org.json.JSONML;
 import org.json.JSONObject;
-import org.json.JSONString;
-
-import com.mysql.cj.xdevapi.JsonString;
 
 import Database.Connection;
 import Database.DatabaseFunctions;
-import Model.Person;
 
 @Path("/rest")
 public class RestFunctions {
@@ -78,8 +75,45 @@ public class RestFunctions {
 	
 	
 	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/createUser")
-	public void createUser(Person p) {
-		System.out.println(p.getFirstName());
+//	public void createUser(Person p) {
+		public void createUser(@FormParam("firstname") String fname, @FormParam("lastname") String lname, @FormParam("username") String username,
+				@FormParam("password") String password, @FormParam("email") String email, @FormParam("doornumber") int doornumber, 
+				@FormParam("street") String street, @FormParam("postcode") String postcode) {
+//		System.out.println(p.toString());
+		System.out.println(fname);
+		System.out.println("Start");
+		Connection singleton = new Connection();
+		java.sql.Connection sqlConnection = singleton.getDatabaseConnection();
+//		String personSql = DatabaseFunctions.createUserAccount(1, username, password,
+//				fname, lname,doornumber,postcode);
+		String sqlPostcode = DatabaseFunctions.createPostCode(postcode, street,"manchester", "uk");
+		String sqlPostcodeCheck = DatabaseFunctions.listPostcode(postcode);
+		String result = "Reached";
+		try {
+			System.out.println("tryBlock");
+
+			Statement stmt = sqlConnection.createStatement();
+		
+			ResultSet rs = stmt.executeQuery(sqlPostcodeCheck);
+			if(!rs.next() || rs == null) {
+			stmt.executeUpdate(sqlPostcode);
+			}
+			ResultSet maxPeople = stmt.executeQuery(DatabaseFunctions.getMaxPersonID());
+			 maxPeople.next();
+			int personId = maxPeople.getInt(1)+1;
+			String personSql = DatabaseFunctions.createUserAccount(personId, username, password,
+					fname, lname,doornumber,postcode);
+
+			stmt.executeUpdate(personSql);
+			System.out.println("tryBlock");
+		}
+		catch(SQLException e) {
+			System.out.println("catchBlock");
+
+			e.printStackTrace();
+		}
+		
 	}
 }

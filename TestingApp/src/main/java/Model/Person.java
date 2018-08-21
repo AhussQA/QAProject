@@ -61,6 +61,12 @@ public class Person {
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
+
+	@Override
+	public String toString() {
+		return "Person [personID=" + personID + ", doorNumber=" + doorNumber + ", userName=" + userName + ", password="
+				+ password + ", firstName=" + firstName + ", lastName=" + lastName + ", postcode=" + postcode + "]";
+	}
 	
 	
 	
