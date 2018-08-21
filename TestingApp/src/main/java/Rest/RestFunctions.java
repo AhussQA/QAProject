@@ -100,9 +100,13 @@ public class RestFunctions {
 			if(!rs.next() || rs == null) {
 			stmt.executeUpdate(sqlPostcode);
 			}
+			
 			ResultSet maxPeople = stmt.executeQuery(DatabaseFunctions.getMaxPersonID());
-			 maxPeople.next();
-			int personId = maxPeople.getInt(1)+1;
+			
+			 maxPeople.first();
+			int personId = maxPeople.getInt("max")+1;
+//			System.out.println("maxperson:: "+personId);
+			
 			String personSql = DatabaseFunctions.createUserAccount(personId, username, password,
 					fname, lname,doornumber,postcode);
 

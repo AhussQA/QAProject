@@ -47,7 +47,7 @@ public class DatabaseFunctions {
     }
     
     public static String getMaxPersonID() {
-    	return "Select Count(personID) from person";
+    	return "Select Count(personID) as max from person";
     }
 
     
