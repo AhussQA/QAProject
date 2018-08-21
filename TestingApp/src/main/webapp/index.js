@@ -16,6 +16,32 @@ function sendSearch(){
     
 }
 
+function login(){
+    var req = new XMLHttpRequest();
+req.open('GET', document.location, false);
+req.send(null);
+var headers = req.getAllResponseHeaders().toLowerCase();
+alert(headers);
+//    var usernameField = document.getElementById("username");
+//    var passwordField = document.getElementById("password");
+//    var username = usernameField.value;
+//    var password = passwordField.value;
+//
+//    var request = new XMLHttpRequest();
+//        console.log(username); 
+//
+//
+//    request.open('GET',"http://localhost:8080/TestingApp/example/rest/authenticate?username="+username+"&password="+password);
+//    request.responseType='json';
+//    request.send();
+//    request.onload = function(){
+//    var reply = request.response;
+//        console.log(reply.username);
+//    }
+  
+    
+}
+
 //function createUser(){
 //    var name = document.getElementById("firstname").value;
 //    var username = document.getElementById("username").value;

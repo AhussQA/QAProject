@@ -16,19 +16,21 @@
         <title>Upload Item</title>
     </head>
     <body>
-                
+        <form action = "example/rest/uploadItem" method = "post">        
         <div class="input-group">
         <P>Name:</P>
-        <input type="text" class="form-control currency">
+        <input name = "name" type="text" class="form-control currency">
         <P>Category:</P>
-        <input type="text" class="form-control currency">  
+        <input name = "category" type="text" class="form-control currency">  
         <P>Price:</P>
-        <input type="text" value="1000"  class="form-control currency" id="price" />
+        <input name = "price" type="text" value="1000"  class="form-control currency" id="price" />
         <P>Quantity:</P>
-        <input type = "text" id ="quantity" class="form-control currency">
+        <input name = "quantity" type = "text" id ="quantity" class="form-control currency">
         </div>
         <P>Detailed Description:</P>
-        <textarea id="detailedDescription">
+        <textarea name = "desc" id="detailedDescription">
         </textarea>
+            <button type = submit>Submit</button>
+        </form>
     </body>
 </html>

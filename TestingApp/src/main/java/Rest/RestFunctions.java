@@ -76,6 +76,73 @@ public class RestFunctions {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Path("/authenticate")
+	public String authenticate(@FormParam("username") String username, @FormParam("password") String password) {
+		Connection singleton = new Connection();
+		java.sql.Connection sqlConnection = singleton.getDatabaseConnection();
+		String loginSql = DatabaseFunctions.login(username,password);
+		System.out.println(loginSql);
+		Statement stmt;
+		Map<String,String> credentials = new HashMap<>();
+		String result = "";
+		try {
+			stmt = sqlConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(loginSql);
+		if(rs.next()) {
+			
+			credentials.put("username", rs.getString(2));
+			credentials.put("password", rs.getString(3));
+			result = new JSONObject(credentials).toString();
+			
+		}else {
+			credentials.put("error", "error");
+			result= new JSONObject(credentials).toString();
+		}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/authenticat")
+	public String authenticat(@QueryParam("username") String username, @QueryParam("password") String password) {
+		Connection singleton = new Connection();
+		java.sql.Connection sqlConnection = singleton.getDatabaseConnection();
+		String loginSql = DatabaseFunctions.login(username,password);
+		System.out.println(loginSql);
+		Statement stmt;
+		Map<String,String> credentials = new HashMap<>();
+		String result = "";
+		try {
+			stmt = sqlConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(loginSql);
+		if(rs.next()) {
+			
+			credentials.put("username", rs.getString(2));
+			credentials.put("password", rs.getString(3));
+			result = new JSONObject(credentials).toString();
+			
+		}else {
+			credentials.put("error", "error");
+			result= new JSONObject(credentials).toString();
+		}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/createUser")
 //	public void createUser(Person p) {
 		public void createUser(@FormParam("firstname") String fname, @FormParam("lastname") String lname, @FormParam("username") String username,
@@ -119,5 +186,12 @@ public class RestFunctions {
 			e.printStackTrace();
 		}
 		
+	}
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Path("/uploadItem")
+	public void uploadItem(@FormParam("name") String fname, @FormParam("category") String lname,
+			@FormParam("price") String price, @FormParam("quantity") int quantity, @FormParam("desc") String desc) {
+		System.out.println("Called");
 	}
 }

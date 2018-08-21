@@ -20,6 +20,14 @@ public class DatabaseFunctions {
       return "INSERT INTO postcode VALUES ("+enquote(postcode)+","+enquote(city)+","+enquote(county)+","+enquote(country)+")";
   }
   
+  
+  public static String uploadItem(int id, String name,String category,String price,int quantity,int sellerID,String desc){
+
+      return "INSERT INTO item VALUES ("+id+","+enquote(name)+","+enquote(category)+","
+      +enquote(price)+","+quantity+","+sellerID+","+enquote(desc)+")";
+  }
+  
+  
   public static String listPostcode(String postcode){
       return "SELECT * FROM postcode WHERE postcode ='"+postcode+"'";
   }
@@ -49,7 +57,9 @@ public class DatabaseFunctions {
     public static String getMaxPersonID() {
     	return "Select Count(personID) as max from person";
     }
-
+    public static String login(String username, String password){
+        return "SELECT * FROM person WHERE userName ="+enquote(username)+"and password ="+enquote(password);
+    }
     
 
 
