@@ -10,26 +10,28 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-        
+        <script src="sellAnItem.js"></script> 
+
         
         <link href = "sellAnItem.css" rel = "stylesheet">
         <title>Upload Item</title>
     </head>
     <body>
-        <form action = "example/rest/uploadItem" method = "post">        
+        <form id="uploadItem" >        
         <div class="input-group">
         <P>Name:</P>
         <input name = "name" type="text" class="form-control currency">
         <P>Category:</P>
         <input name = "category" type="text" class="form-control currency">  
         <P>Price:</P>
-        <input name = "price" type="text" value="1000"  class="form-control currency" id="price" />
+        <input name = "price" type="text" value="0.99"  class="form-control currency" id="price" />
         <P>Quantity:</P>
         <input name = "quantity" type = "text" id ="quantity" class="form-control currency">
         </div>
         <P>Detailed Description:</P>
         <textarea name = "desc" id="detailedDescription">
         </textarea>
+        <input style = "visibility: visible" name ="sellerID"/>
             <button type = submit>Submit</button>
         </form>
     </body>

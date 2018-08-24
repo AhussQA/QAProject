@@ -89,13 +89,14 @@ public class RestFunctions {
 			stmt = sqlConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(loginSql);
 		if(rs.next()) {
-			
+			credentials.put("status", "success");
 			credentials.put("username", rs.getString(2));
 			credentials.put("password", rs.getString(3));
+			
 			result = new JSONObject(credentials).toString();
 			
 		}else {
-			credentials.put("error", "error");
+			credentials.put("status", "fail");
 			result= new JSONObject(credentials).toString();
 		}
 
@@ -103,6 +104,7 @@ public class RestFunctions {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(result);
 		return result;
 	}
 	
@@ -190,8 +192,13 @@ public class RestFunctions {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/uploadItem")
-	public void uploadItem(@FormParam("name") String fname, @FormParam("category") String lname,
-			@FormParam("price") String price, @FormParam("quantity") int quantity, @FormParam("desc") String desc) {
+	public void uploadItem(@FormParam("name") String name, @FormParam("category") String category,
+			@FormParam("price") String price, @FormParam("quantity") String quantity, @FormParam("desc") String desc,
+			@FormParam("sellerID") String sellerID) {
 		System.out.println("Called");
+		Connection singleton = new Connection();
+		java.sql.Connection sqlConnection = singleton.getDatabaseConnection();
+		DatabaseFunctions.uploadItem(1, name, category, price, Integer.parseInt(quantity), 1, desc);
+		System.out.println("sellerID::"+sellerID);
 	}
 }
