@@ -12,20 +12,29 @@ function sendSearch() {
     request.onload = function () {
         var reply = request.response;
         var ul = document.getElementById("#item-list");
-        var length = reply.length;
-        reply = reply.slice(1,length-1);
-        var itemArray = reply.split(",");
-        for(var i; i<itemArray.length;i++){
-        var li = document.createElement("li");
+//        var length = reply.length;
+//        reply = reply.slice(1,length-1);
+//        var itemArray = reply.split(",");
+//        for(var i=0; i<itemArray.length;i++){
+//        var li = document.createElement("li");
+//        var itemName = document.createElement("p");
+//        var itemPrice = document.createElement("p");
+//            itemName.innerHTML=itemArray[i].name;
+//            itemPrice.innerHTML laq=itemArray[i].price;
+//            li.append(itemName);
+//            li.append(itemPrice);
+//            ul.append(li);
+//        }
+        for(var i = 0; i<reply.length;i++){
+            var li = document.createElement("li");
         var itemName = document.createElement("p");
         var itemPrice = document.createElement("p");
-            itemName.innerHTML=itemArray[i].name;
-            itemPrice.innerHTML=itemArray[i].price;
+            itemName.innerHTML=reply[i].name;
+            itemPrice.innerHTML laq=reply[i].price;
             li.append(itemName);
             li.append(itemPrice);
             ul.append(li);
         }
-        
         
     }
 }
