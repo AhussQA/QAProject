@@ -9,31 +9,32 @@ function sendSearch() {
     request.open('GET', "http://localhost:8080/TestingApp/example/rest/search?srstring=" + searchString);
     request.responseType = 'json';
     request.send();
+                console.log("hello");
+
     request.onload = function () {
         var reply = request.response;
-        var ul = document.getElementById("#item-list");
-//        var length = reply.length;
-//        reply = reply.slice(1,length-1);
-//        var itemArray = reply.split(",");
-//        for(var i=0; i<itemArray.length;i++){
-//        var li = document.createElement("li");
-//        var itemName = document.createElement("p");
-//        var itemPrice = document.createElement("p");
-//            itemName.innerHTML=itemArray[i].name;
-//            itemPrice.innerHTML laq=itemArray[i].price;
-//            li.append(itemName);
-//            li.append(itemPrice);
-//            ul.append(li);
-//        }
+        var table = document.getElementById("item-table");
+        var tablebody = document.getElementById("table-body");
+
+
         for(var i = 0; i<reply.length;i++){
-            var li = document.createElement("li");
-        var itemName = document.createElement("p");
-        var itemPrice = document.createElement("p");
-            itemName.innerHTML=reply[i].name;
-            itemPrice.innerHTML laq=reply[i].price;
-            li.append(itemName);
-            li.append(itemPrice);
-            ul.append(li);
+            console.log("hello");
+            var tableRow = document.createElement("tr");
+
+            var itemQuantity = document.createElement("td");
+            var itemName = document.createElement("td");
+            var itemPrice = document.createElement("td");
+            let t1 = document.createTextNode(reply[i].name);
+            let t2 = document.createTextNode(reply[i].price);
+            let t3 = document.createTextNode(reply[i].quantity);
+            itemName.appendChild(t1);
+            itemPrice.appendChild(t2);
+            itemQuantity.appendChild(t3);
+            
+            tableRow.appendChild(itemName);
+            tableRow.appendChild(itemPrice);
+            tableRow.appendChild(itemQuantity);
+            table.appendChild(tableRow);
         }
         
     }

@@ -43,12 +43,11 @@ public class RestFunctions {
 		
 		List<String> items = new ArrayList<>();
 		try {
-			result+=" try";
 			Statement stmt = sqlConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
-			name += rs.getString("Name");
-			price += rs.getString("Price");
+			name = rs.getString("Name");
+			price = rs.getString("Price");
 			id = rs.getInt("id");
 			quantity = rs.getInt("Quantity");
 			sellerID = rs.getInt("SellerID");
@@ -82,6 +81,7 @@ public class RestFunctions {
 			e.printStackTrace();
 			result += "Error";
 		}
+		System.out.println(items.toString());
 		return items.toString();
 	}
 	

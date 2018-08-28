@@ -17,10 +17,10 @@ public class Item {
 		itemMap = new HashMap<>();
 		itemMap.put("id", String.valueOf(id));
 		itemMap.put("name", name);
-		itemMap.put("id", String.valueOf(categoryID));
+		itemMap.put("category", String.valueOf(categoryID));
 	    itemMap.put("price", price);
-		itemMap.put("id", String.valueOf(quantity));
-		itemMap.put("id", String.valueOf(sellerID));
+		itemMap.put("quantity", String.valueOf(quantity));
+		itemMap.put("sellerID", String.valueOf(sellerID));
 
 	}
 	
