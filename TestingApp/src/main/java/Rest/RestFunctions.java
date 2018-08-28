@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import Database.Connection;
 import Database.DatabaseFunctions;
+import Model.Item;
 
 @Path("/rest")
 public class RestFunctions {
@@ -28,7 +29,7 @@ public class RestFunctions {
 	@GET
 	@Produces("Application/json")
 	@Path("/search")
-	public List<String> searchForItem(@QueryParam("srstring") String search) {
+	public String searchForItem(@QueryParam("srstring") String search) {
 		Connection singleton = new Connection();
 		java.sql.Connection sqlConnection = singleton.getDatabaseConnection();
 		String sql = DatabaseFunctions.listItems(search);
@@ -53,14 +54,25 @@ public class RestFunctions {
 			sellerID = rs.getInt("SellerID");
 			categoryID = rs.getInt("CategoryID");
 			result = "{\"id\":\""+id+"\""+","+ "\"name\":\""+name+"\""+"}";
-			Map<String,String> item = new HashMap<>();
-			item.put("id", String.valueOf(id));
-			item.put("name", name);
-			item.put("category", String.valueOf(categoryID));
-			item.put("price", price);
-			item.put("quantity", String.valueOf(quantity));
-			item.put("sellerID", String.valueOf(sellerID));
-			JSONObject json = new JSONObject(item);
+//			Map<String,String> item = new HashMap<>();
+//			item.put("id", String.valueOf(id));
+//			item.put("name", name);
+//			item.put("category", String.valueOf(categoryID));
+//			item.put("price", price);
+//			item.put("quantity", String.valueOf(quantity));
+//			item.put("sellerID", String.valueOf(sellerID));
+			Item item = new Item();
+			item.setId(id);
+			item.setCategoryID(categoryID);
+			item.setName(name);
+			item.setPrice(price);
+			item.setQuantity(quantity);
+			item.setSellerID(sellerID);
+			item.toHashMap();
+			JSONObject json = new JSONObject(item.getItemMap());
+			
+			
+			
 			result = json.toString();
 			items.add(result);
 			}
@@ -70,7 +82,7 @@ public class RestFunctions {
 			e.printStackTrace();
 			result += "Error";
 		}
-		return items;
+		return items.toString();
 	}
 	
 //	public String  search() {
