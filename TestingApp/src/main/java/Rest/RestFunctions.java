@@ -3,7 +3,9 @@ package Rest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -26,7 +28,7 @@ public class RestFunctions {
 	@GET
 	@Produces("Application/json")
 	@Path("/search")
-	public String searchForItem(@QueryParam("srstring") String search) {
+	public List<String> searchForItem(@QueryParam("srstring") String search) {
 		Connection singleton = new Connection();
 		java.sql.Connection sqlConnection = singleton.getDatabaseConnection();
 		String sql = DatabaseFunctions.listItems(search);
@@ -38,6 +40,7 @@ public class RestFunctions {
 		int quantity=0;
 		int sellerID=0;
 		
+		List<String> items = new ArrayList<>();
 		try {
 			result+=" try";
 			Statement stmt = sqlConnection.createStatement();
@@ -59,6 +62,7 @@ public class RestFunctions {
 			item.put("sellerID", String.valueOf(sellerID));
 			JSONObject json = new JSONObject(item);
 			result = json.toString();
+			items.add(result);
 			}
 			
 		} catch (SQLException e) {
@@ -66,7 +70,7 @@ public class RestFunctions {
 			e.printStackTrace();
 			result += "Error";
 		}
-		return result;
+		return items;
 	}
 	
 //	public String  search() {
@@ -90,7 +94,7 @@ public class RestFunctions {
 			ResultSet rs = stmt.executeQuery(loginSql);
 		if(rs.next()) {
 			credentials.put("status", "success");
-			credentials.put("username", rs.getString(2));
+			credentials.put("username", String.valueOf(rs.getInt("PersonID")));
 			credentials.put("password", rs.getString(3));
 			
 			result = new JSONObject(credentials).toString();
@@ -146,17 +150,13 @@ public class RestFunctions {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/createUser")
-//	public void createUser(Person p) {
 		public void createUser(@FormParam("firstname") String fname, @FormParam("lastname") String lname, @FormParam("username") String username,
 				@FormParam("password") String password, @FormParam("email") String email, @FormParam("doornumber") int doornumber, 
 				@FormParam("street") String street, @FormParam("postcode") String postcode) {
-//		System.out.println(p.toString());
 		System.out.println(fname);
 		System.out.println("Start");
 		Connection singleton = new Connection();
 		java.sql.Connection sqlConnection = singleton.getDatabaseConnection();
-//		String personSql = DatabaseFunctions.createUserAccount(1, username, password,
-//				fname, lname,doornumber,postcode);
 		String sqlPostcode = DatabaseFunctions.createPostCode(postcode, street,"manchester", "uk");
 		String sqlPostcodeCheck = DatabaseFunctions.listPostcode(postcode);
 		String result = "Reached";
@@ -174,7 +174,6 @@ public class RestFunctions {
 			
 			 maxPeople.first();
 			int personId = maxPeople.getInt("max")+1;
-//			System.out.println("maxperson:: "+personId);
 			
 			String personSql = DatabaseFunctions.createUserAccount(personId, username, password,
 					fname, lname,doornumber,postcode);
@@ -198,7 +197,7 @@ public class RestFunctions {
 		System.out.println("Called");
 		Connection singleton = new Connection();
 		java.sql.Connection sqlConnection = singleton.getDatabaseConnection();
-		DatabaseFunctions.uploadItem(1, name, category, price, Integer.parseInt(quantity), 1, desc);
-		System.out.println("sellerID::"+sellerID);
+		DatabaseFunctions.uploadItem(1, name, category, price, Integer.parseInt(quantity), Integer.parseInt(sellerID), desc);
+		System.out.println("sellerID::"+sellerID); 
 	}
 }

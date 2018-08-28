@@ -43,7 +43,7 @@ public class DatabaseFunctions {
     }
 
     public static String listItems(String name){
-        return "SELECT * FROM item WHERE name ='"+name+"'";
+        return "SELECT * FROM item WHERE name LIKE '%"+name+"%'";
     }
 
     public static String listUserByID(int ID){
